@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import styled from "styled-components";
+import backgroundImage from "./imgs/bg.jpg";
+import Header from "./components/Header";
+import StyledTable from "./components/Listing";
 
-function App() {
+const PageContainer = styled.div`
+  height: 100vh; // 100% of the viewport height
+  width: 100vw; // 100% of the viewport width
+  background-image: url(${backgroundImage});
+  background-size: cover; // Cover the entire container
+  background-position: center; // Center the image
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white; // Adjust text color for better visibility
+`;
+
+const PageContent = styled.div`
+  // Additional styles for your content
+`;
+
+const YourComponent = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <PageContainer>
+      <PageContent>
+        <Header />
+        <StyledTable />
+      </PageContent>
+    </PageContainer>
   );
-}
+};
 
-export default App;
+export default YourComponent;
