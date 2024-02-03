@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { IoHeadset, IoPlay, IoPause, IoTrash } from "react-icons/io5";
 import styled from "styled-components";
 
@@ -62,15 +62,15 @@ const TableRow = styled.tr`
   border-bottom: 1px solid #ddd;
 
   td {
-    max-width: 200px; /* Set a maximum width for each cell to prevent over-expansion */
+    max-width: 200px;
     overflow: hidden;
-    text-overflow: ellipsis; /* Add ellipsis for text overflow */
+    text-overflow: ellipsis;
     padding: 10px;
   }
 
   @media (min-width: 768px) {
     td {
-      max-width: none; /* Remove maximum width for larger screens */
+      max-width: none;
     }
   }
 `;
@@ -145,6 +145,7 @@ const Counter = styled.div`
 const StyledTable = () => {
   const [playingIndex, setPlayingIndex] = useState<number>(-1);
   const [counter, setCounter] = useState<number>(0);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     let interval: NodeJS.Timer;
@@ -162,8 +163,17 @@ const StyledTable = () => {
   const handlePlayClick = (index: number) => {
     if (playingIndex === index) {
       setPlayingIndex(-1);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
     } else {
       setPlayingIndex(index);
+      if (audioRef.current) {
+        audioRef.current.src = "/audio/sample.mp3";
+        audioRef.current.loop = true;
+        audioRef.current.play();
+      }
     }
   };
 
@@ -184,6 +194,7 @@ const StyledTable = () => {
             </Counter>
           </Playing>
         )}
+        <audio ref={audioRef} />
       </DetailsSection>
       <TableSection>
         <Table>
