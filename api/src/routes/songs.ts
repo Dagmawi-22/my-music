@@ -70,4 +70,34 @@ router.delete("/api/songs/:id", async (req, res) => {
   }
 });
 
+// get song stats
+router.get("/api/stats", async (req, res) => {
+  try {
+    const totalSongs = await Song.countDocuments();
+    const genresStats = await Song.aggregate([
+      { $group: { _id: "$genre", count: { $sum: 1 } } },
+    ]);
+
+    const artistsStats = await Song.aggregate([
+      { $group: { _id: "$artist", count: { $sum: 1 } } },
+    ]);
+
+    const totalGenres = genresStats.length;
+    const totalArtists = artistsStats.length;
+    const totalAlbums = await Song.distinct("album").countDocuments();
+
+    return res.json({
+      totalSongs,
+      totalGenres,
+      totalArtists,
+      totalAlbums,
+      genresStats,
+      artistsStats,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 export { router as songsRouter };
