@@ -1,5 +1,12 @@
+import { table } from "console";
 import React, { useState, useEffect, useRef } from "react";
-import { IoHeadset, IoPlay, IoPause, IoTrash } from "react-icons/io5";
+import {
+  IoHeadset,
+  IoPlay,
+  IoPause,
+  IoTrash,
+  IoPlayForward,
+} from "react-icons/io5";
 import styled from "styled-components";
 
 const tableData = [
@@ -77,6 +84,7 @@ const TableRow = styled.tr`
 
 const TableCell = styled.td`
   padding: 10px;
+  color: white;
 `;
 
 const PlayIconWrapper = styled.div`
@@ -130,6 +138,7 @@ const DetailsHeading = styled.h2`
 
 const Playing = styled.div`
   display: flex;
+  color: white;
 `;
 
 const DetailsText = styled.p`
@@ -140,6 +149,16 @@ const DetailsText = styled.p`
 const Counter = styled.div`
   font-size: 36px;
   margin-left: 30px;
+`;
+
+const IconWrapper = styled.div`
+  background-color: #1db954;
+  color: #fff;
+  clip-path: circle();
+  padding: 7px;
+  font-size: 24px;
+  margin-top: -12px;
+  cursor: pointer;
 `;
 
 const StyledTable = () => {
@@ -179,6 +198,24 @@ const StyledTable = () => {
 
   const playingSong = playingIndex !== -1 ? tableData[playingIndex] : null;
 
+  const handleForward = () => {
+    if (playingIndex == tableData?.length - 1) {
+      setPlayingIndex(0);
+      if (audioRef.current) {
+        audioRef.current.src = "/audio/sample.mp3";
+        audioRef.current.loop = true;
+        audioRef.current.play();
+      }
+      return;
+    }
+    setPlayingIndex(playingIndex + 1);
+    if (audioRef.current) {
+      audioRef.current.src = "/audio/sample.mp3";
+      audioRef.current.loop = true;
+      audioRef.current.play();
+    }
+  };
+
   return (
     <PageContainer>
       <DetailsSection>
@@ -188,6 +225,11 @@ const StyledTable = () => {
             <DetailsText>{playingSong.artist?.toUpperCase()}</DetailsText>
             <DetailsText>-</DetailsText>
             <DetailsText>{playingSong.title?.toUpperCase()}</DetailsText>
+            <DetailsText>
+              <IconWrapper>
+                <IoPlayForward onClick={handleForward} />
+              </IconWrapper>
+            </DetailsText>
             <Counter>
               {String(Math.floor(counter / 60)).padStart(2, "0")}:
               {String(counter % 60).padStart(2, "0")}

@@ -1,34 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import backgroundImage from "./imgs/bg.jpg";
 import Header from "./components/Header";
 import StyledTable from "./components/Listing";
+import Statistics from "./components/Stat";
+import Modal from "./components/Modal";
 
 const PageContainer = styled.div`
-  height: 100vh; // 100% of the viewport height
-  width: 100vw; // 100% of the viewport width
+  height: 100vh;
+  width: 100vw;
+  padding: 5px;
   background-image: url(${backgroundImage});
-  background-size: cover; // Cover the entire container
-  background-position: center; // Center the image
+  background-size: cover;
+  background-position: center;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white; // Adjust text color for better visibility
+  overflow-x: hidden; /* Prevent horizontal scrolling */
 `;
 
 const PageContent = styled.div`
-  // Additional styles for your content
+  padding: 20px 30px;
 `;
 
-const YourComponent = () => {
+const App = () => {
+  const [editSong, setEditSong] = useState<boolean>(false);
+  const [deleteSong, setDeleteSong] = useState<boolean>(false);
+
   return (
     <PageContainer>
       <PageContent>
-        <Header />
+        <Statistics />
+        <Header title="My Songs" onAddClick={() => alert("adding")} />
         <StyledTable />
       </PageContent>
     </PageContainer>
   );
 };
 
-export default YourComponent;
+export default App;
