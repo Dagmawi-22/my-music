@@ -1,13 +1,26 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  IoHeadset,
-  IoPlay,
-  IoPause,
-  IoTrash,
-  IoPlayForward,
-} from "react-icons/io5";
-import styled from "styled-components";
 import { MdEdit } from "react-icons/md";
+import {
+  ListingCounter,
+  ListingDeleteIcon,
+  ListingDeleteIconWrapper,
+  ListingDetailsHeading,
+  ListingDetailsSection,
+  ListingDetailsText,
+  ListingEditIconWrapper,
+  ListingIconWrapper,
+  ListingPageContainer,
+  ListingPauseIcon,
+  ListingPlayIcon,
+  ListingPlayIconWrapper,
+  ListingPlaying,
+  ListingTable,
+  ListingTableCell,
+  ListingTableHeader,
+  ListingTableRow,
+  ListingTableSection,
+} from "../styles/styled";
+import { IoHeadset, IoPlayForward } from "react-icons/io5";
 
 const tableData = [
   {
@@ -32,146 +45,6 @@ const tableData = [
     genre: "Hip hop",
   },
 ];
-
-const PageContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin: 20px;
-  font-family: "Raleway", sans-serif;
-`;
-
-const TableSection = styled.div`
-  flex-grow: 1;
-  width: 100%;
-  margin-bottom: 20px;
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`;
-
-const TableHeader = styled.th`
-  background-color: rgba(52, 152, 219, 0.7);
-  color: white;
-  padding: 10px;
-  text-align: left;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const TableRow = styled.tr`
-  &:nth-child(even) {
-    background-color: transparent;
-  }
-
-  white-space: nowrap;
-  border-bottom: 1px solid #ddd;
-
-  td {
-    max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: 10px;
-  }
-
-  @media (min-width: 768px) {
-    td {
-      max-width: none;
-    }
-  }
-`;
-
-const TableCell = styled.td`
-  padding: 10px;
-  color: white;
-`;
-
-const PlayIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  background-color: #1db954;
-  border-radius: 50%;
-  cursor: pointer;
-`;
-
-const EditIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  background-color: #f6f6ff;
-  color: #000;
-  border-radius: 50%;
-  cursor: pointer;
-`;
-
-const PlayIcon = styled(IoPlay)`
-  color: #fff;
-  font-size: 20px;
-`;
-
-const PauseIcon = styled(IoPause)`
-  color: #fff;
-  font-size: 20px;
-`;
-
-const DeleteIconWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  background-color: #ffcccc;
-  border-radius: 50%;
-  cursor: pointer;
-`;
-
-const DeleteIcon = styled(IoTrash)`
-  color: #fff;
-  font-size: 20px;
-`;
-
-const DetailsSection = styled.div`
-  width: 100%;
-  @media (min-width: 768px) {
-    width: 30%;
-  }
-`;
-
-const DetailsHeading = styled.h2`
-  font-size: 18px;
-  white-space: nowrap;
-`;
-
-const Playing = styled.div`
-  display: flex;
-  color: white;
-`;
-
-const DetailsText = styled.p`
-  margin-left: 15px;
-  white-space: nowrap;
-`;
-
-const Counter = styled.div`
-  font-size: 36px;
-  margin-left: 30px;
-`;
-
-const IconWrapper = styled.div`
-  background-color: #1db954;
-  color: #fff;
-  clip-path: circle();
-  padding: 7px;
-  font-size: 24px;
-  margin-top: -12px;
-  cursor: pointer;
-`;
 
 const StyledTable = () => {
   const [playingIndex, setPlayingIndex] = useState<number>(-1);
@@ -233,69 +106,79 @@ const StyledTable = () => {
   };
 
   return (
-    <PageContainer>
-      <DetailsSection>
+    <ListingPageContainer>
+      <ListingDetailsSection>
         {playingSong && (
-          <Playing>
-            <DetailsHeading>Now Playing:</DetailsHeading>
-            <DetailsText>{playingSong.artist?.toUpperCase()}</DetailsText>
-            <DetailsText>-</DetailsText>
-            <DetailsText>{playingSong.title?.toUpperCase()}</DetailsText>
-            <DetailsText>
-              <IconWrapper>
+          <ListingPlaying>
+            <ListingDetailsHeading>Now Playing:</ListingDetailsHeading>
+            <ListingDetailsText>
+              {playingSong.artist?.toUpperCase()}
+            </ListingDetailsText>
+            <ListingDetailsText>-</ListingDetailsText>
+            <ListingDetailsText>
+              {playingSong.title?.toUpperCase()}
+            </ListingDetailsText>
+            <ListingDetailsText>
+              <ListingIconWrapper>
                 <IoPlayForward onClick={handleForward} />
-              </IconWrapper>
-            </DetailsText>
-            <Counter>
+              </ListingIconWrapper>
+            </ListingDetailsText>
+            <ListingCounter>
               {String(Math.floor(counter / 60)).padStart(2, "0")}:
               {String(counter % 60).padStart(2, "0")}
-            </Counter>
-          </Playing>
+            </ListingCounter>
+          </ListingPlaying>
         )}
         <audio ref={audioRef} />
-      </DetailsSection>
-      <TableSection>
-        <Table>
+      </ListingDetailsSection>
+      <ListingTableSection>
+        <ListingTable>
           <thead>
-            <TableRow>
-              <TableHeader>#</TableHeader>
-              <TableHeader>Title</TableHeader>
-              <TableHeader>Artist</TableHeader>
-              <TableHeader>Album</TableHeader>
-              <TableHeader>Genre</TableHeader>
-            </TableRow>
+            <ListingTableRow>
+              <ListingTableHeader>#</ListingTableHeader>
+              <ListingTableHeader>Title</ListingTableHeader>
+              <ListingTableHeader>Artist</ListingTableHeader>
+              <ListingTableHeader>Album</ListingTableHeader>
+              <ListingTableHeader>Genre</ListingTableHeader>
+            </ListingTableRow>
           </thead>
           <tbody>
             {tableData.map((item, index) => (
-              <TableRow key={item.id}>
-                <TableCell>
+              <ListingTableRow key={item.id}>
+                <ListingTableCell>
                   <IoHeadset size={24} />
-                </TableCell>
-                <TableCell>{item.title}</TableCell>
-                <TableCell>{item.artist}</TableCell>
-                <TableCell>{item.album}</TableCell>
-                <TableCell>{item.genre}</TableCell>
-                <TableCell>
-                  <PlayIconWrapper onClick={() => handlePlayClick(index)}>
-                    {playingIndex === index ? <PauseIcon /> : <PlayIcon />}
-                  </PlayIconWrapper>
-                </TableCell>
-                <TableCell>
-                  <EditIconWrapper onClick={() => handleEdit(index)}>
+                </ListingTableCell>
+                <ListingTableCell>{item.title}</ListingTableCell>
+                <ListingTableCell>{item.artist}</ListingTableCell>
+                <ListingTableCell>{item.album}</ListingTableCell>
+                <ListingTableCell>{item.genre}</ListingTableCell>
+                <ListingTableCell>
+                  <ListingPlayIconWrapper
+                    onClick={() => handlePlayClick(index)}
+                  >
+                    {playingIndex === index ? (
+                      <ListingPauseIcon />
+                    ) : (
+                      <ListingPlayIcon />
+                    )}
+                  </ListingPlayIconWrapper>
+                </ListingTableCell>
+                <ListingTableCell>
+                  <ListingEditIconWrapper onClick={() => handleEdit(index)}>
                     <MdEdit />
-                  </EditIconWrapper>
-                </TableCell>
-                <TableCell>
-                  <DeleteIconWrapper>
-                    <DeleteIcon />
-                  </DeleteIconWrapper>
-                </TableCell>
-              </TableRow>
+                  </ListingEditIconWrapper>
+                </ListingTableCell>
+                <ListingTableCell>
+                  <ListingDeleteIconWrapper>
+                    <ListingDeleteIcon />
+                  </ListingDeleteIconWrapper>
+                </ListingTableCell>
+              </ListingTableRow>
             ))}
           </tbody>
-        </Table>
-      </TableSection>
-    </PageContainer>
+        </ListingTable>
+      </ListingTableSection>
+    </ListingPageContainer>
   );
 };
 
