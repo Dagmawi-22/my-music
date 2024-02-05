@@ -16,15 +16,13 @@ A MERN application that lets you add songs to your favourite list, play, edit & 
 
 ## Requirements
 
-List the software and tools required to run your application. Include versions if necessary.
-
 - Node.js
 - MongoDB
 - ...
 
 ## Installation
 
-Provide step-by-step instructions on how to install and set up your application locally. Include any specific dependencies or configurations.
+how to install and set up your application locally:
 
 ```bash
 # Clone the repository
