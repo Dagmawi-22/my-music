@@ -19,8 +19,8 @@ import { API_BASE_URL } from "../config";
 function* fetchSongs(): Generator<any, void, any> {
   try {
     const response = yield call(fetch, `${API_BASE_URL}`);
-    const data: Song[] = yield call([response, "json"]);
-    yield put(fetchSongsSuccess(data));
+    const { songs, stats } = yield call([response, "json"]);
+    yield put(fetchSongsSuccess({ songs, stats }));
   } catch (error: any) {
     yield put(fetchSongsFailure(error.message));
   }
@@ -40,8 +40,8 @@ function* createSong(action: {
     });
 
     if (response.ok) {
-      const data: Song = yield call([response, "json"]);
-      yield put(createSongSuccess(data));
+      const { song, stats } = yield call([response, "json"]);
+      yield put(createSongSuccess({ song, stats }));
     } else {
       const errorData = yield call([response, "json"]);
       throw new Error(errorData.message);

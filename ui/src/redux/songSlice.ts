@@ -3,6 +3,7 @@ import { Song, SongState } from "../interfaces/Interface";
 
 const initialState: SongState = {
   songs: [],
+  stats: {},
   loading: false,
   error: null,
 };
@@ -30,9 +31,13 @@ const songSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    fetchSongsSuccess(state, action: PayloadAction<Song[]>) {
+    fetchSongsSuccess(
+      state,
+      action: PayloadAction<{ songs: Song[]; stats: any }>
+    ) {
       state.loading = false;
-      state.songs = action.payload;
+      state.songs = action.payload.songs;
+      state.stats = action.payload.stats;
     },
     fetchSongsFailure(state, action: PayloadAction<string>) {
       state.loading = false;
@@ -43,11 +48,15 @@ const songSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    createSongSuccess(state, action: PayloadAction<Song>) {
+    createSongSuccess(
+      state,
+      action: PayloadAction<{ song: Song; stats: any }>
+    ) {
       state.loading = false;
       if (state.songs) {
-        state.songs.push(action.payload);
+        state.songs.push(action.payload.song);
       }
+      state.stats = action.payload.stats;
     },
     createSongFailure(state, action: PayloadAction<string>) {
       state.loading = false;

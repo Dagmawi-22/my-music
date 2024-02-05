@@ -18,4 +18,10 @@ export interface SongState {
   songs: Song[];
   loading: boolean;
   error: null | string;
+  stats: object;
+}
+
+export interface ArtistStats {
+  _id: string;
+  count: number;
 }

@@ -58,7 +58,6 @@ let tableData = [
 const StyledTable = () => {
   const dispatch = useDispatch();
   const songs = useSelector((state: any) => state?.songs);
-
   const [playingIndex, setPlayingIndex] = useState<number>(-1);
   const [counter, setCounter] = useState<number>(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
