@@ -39,8 +39,13 @@ function* createSong(action: {
       body: JSON.stringify(action.payload),
     });
 
-    const data: Song = yield call([response, "json"]);
-    yield put(createSongSuccess(data));
+    if (response.ok) {
+      const data: Song = yield call([response, "json"]);
+      yield put(createSongSuccess(data));
+    } else {
+      const errorData = yield call([response, "json"]);
+      throw new Error(errorData.message);
+    }
   } catch (error: any) {
     yield put(createSongFailure(error.message));
   }

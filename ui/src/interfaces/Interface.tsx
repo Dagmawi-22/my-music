@@ -7,7 +7,7 @@ export interface ModalProps {
 }
 
 export interface Song {
-  id: number;
+  id?: number;
   title: string;
   album: string;
   artist: string;

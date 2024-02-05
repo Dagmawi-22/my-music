@@ -1,3 +1,5 @@
+// Header.tsx
+
 import React, { useState } from "react";
 import { IoAdd } from "react-icons/io5";
 import Modal from "./Modal";
@@ -11,8 +13,8 @@ import {
   HeaderSubmitButton,
   HeaderTextField,
 } from "../styles/styled";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchSongsStart } from "../redux/songSlice";
+import { useDispatch } from "react-redux";
+import { createSongStart } from "../redux/songSlice";
 
 interface HeaderProps {
   title: string;
@@ -21,12 +23,8 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ title, onAddClick }) => {
   const dispatch = useDispatch();
-  const { songs, loading, error } = useSelector(
-    (state: any) => state.songs || []
-  );
 
   const [addSong, setAddSong] = useState<boolean>(false);
-
   const [songTitle, setSongTitle] = useState<string>("");
   const [album, setAlbum] = useState<string>("");
   const [artist, setArtist] = useState<string>("");
@@ -48,6 +46,12 @@ const Header: React.FC<HeaderProps> = ({ title, onAddClick }) => {
     setGenre(e.target.value);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    dispatch(createSongStart({ title: songTitle, album, artist, genre }));
+    setAddSong(false);
+  };
+
   return (
     <>
       <Modal isOpen={addSong} onClose={() => setAddSong(false)}>
@@ -56,7 +60,7 @@ const Header: React.FC<HeaderProps> = ({ title, onAddClick }) => {
           <HeaderModalContainer>
             <h2>Add new song</h2>
 
-            <form>
+            <form onSubmit={handleSubmit}>
               <HeaderTextField
                 type="text"
                 placeholder="Title"
@@ -102,7 +106,7 @@ const Header: React.FC<HeaderProps> = ({ title, onAddClick }) => {
         <HeaderHeading>{title}</HeaderHeading>
         {onAddClick && (
           <HeaderAddButton onClick={() => setAddSong(true)}>
-            {<IoAdd />}
+            <IoAdd />
           </HeaderAddButton>
         )}
       </HeaderContainer>
