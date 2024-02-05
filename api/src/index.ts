@@ -1,39 +1,23 @@
 import express from "express";
-import json from "body-parser";
-import songsRouter from "./routes/songs";
+import mongoose from "mongoose";
+import { songsRouter } from "./routes/songs";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
-app.use(songsRouter);
+const PORT = 3001;
 
-app.listen(3000, () => {
-  console.log("Server is listening on port 3000");
+mongoose.connect(process.env.MONGODB_URI!, {});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.once("open", () => {
+  console.log("Connected to MongoDB");
 });
 
-// import express from "express";
-// import mongoose from "mongoose";
-// import { router as songsRouter } from "./routes/songs";
-// import dotenv from "dotenv";
+app.use(songsRouter);
 
-// dotenv.config();
-
-// const app = express();
-// const PORT = 3000;
-
-// Connect to MongoDB
-// mongoose.connect(process.env.MONGODB_URI!, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
-// const db = mongoose.connection;
-// db.on("error", console.error.bind(console, "MongoDB connection error:"));
-// db.once("open", () => {
-//   console.log("Connected to MongoDB");
-// });
-
-// // Use the songs router
-// app.use(songsRouter);
-
-// app.listen(PORT, () => {
-//   console.log(`Server is running on port ${PORT}`);
-// });
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
