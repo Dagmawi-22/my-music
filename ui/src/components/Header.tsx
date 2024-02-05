@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { IoAdd } from "react-icons/io5";
-import styled from "styled-components";
 import Modal from "./Modal";
 import {
   HeaderAddButton,
@@ -12,6 +11,8 @@ import {
   HeaderSubmitButton,
   HeaderTextField,
 } from "../styles/styled";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchSongsStart } from "../redux/songSlice";
 
 interface HeaderProps {
   title: string;
@@ -19,6 +20,11 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ title, onAddClick }) => {
+  const dispatch = useDispatch();
+  const { songs, loading, error } = useSelector(
+    (state: any) => state.songs || []
+  );
+
   const [addSong, setAddSong] = useState<boolean>(false);
 
   const [songTitle, setSongTitle] = useState<string>("");

@@ -64,6 +64,10 @@ const songSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    resetState(state) {
+      state.loading = false;
+      state.error = null;
+    },
   },
 });
 
@@ -80,6 +84,7 @@ export const {
   deleteSongStart,
   deleteSongSuccess,
   deleteSongFailure,
+  resetState,
 } = songSlice.actions;
 
 export default songSlice.reducer;
