@@ -1,3 +1,11 @@
+
+
+
+<img width="923" alt="music-app" src="https://github.com/Dagmawi-22/my-music/assets/109204719/82b5909f-904d-47fa-8c13-72781fd2773a">
+
+
+
+
 # My-Music
 
 A MERN application enabling you to manage & enjoy your favourite songs
