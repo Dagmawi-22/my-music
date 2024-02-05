@@ -1,0 +1,27 @@
+version: "3"
+services:
+  # MongoDB service
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data:/data/db
+  # Node.js (Express.js) server service
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+  # React (client) app service
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
