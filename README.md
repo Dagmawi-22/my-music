@@ -32,6 +32,6 @@ git clone https://github.com/Dagmawi-22/my-music.git
 cd my-music
 
 # Build & run docker image
-cocker-compose up --build -d
+docker-compose up --build -d
 
 ```
