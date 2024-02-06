@@ -41,7 +41,7 @@ const Statistics = () => {
             </StatIconWrapper>
             <div>
               <h3>All Songs</h3>
-              <p>{stats?.totalSongs}</p>
+              <p>{stats?.totalSongs ? stats?.totalSongs : "-"}</p>
             </div>
           </StatisticCard>
 
@@ -51,7 +51,7 @@ const Statistics = () => {
             </StatIconWrapper>
             <div>
               <h3>Artists</h3>
-              <p>{stats?.totalArtists}</p>
+              <p>{stats?.totalArtists ? stats?.totalArtists : "-"}</p>
             </div>
           </StatisticCard>
 
@@ -61,7 +61,7 @@ const Statistics = () => {
             </StatIconWrapper>
             <div>
               <h3>Albums</h3>
-              <p>{stats?.totalAlbums}</p>
+              <p>{stats?.totalAlbums ? stats?.totalAlbums : "-"}</p>
             </div>
           </StatisticCard>
 
@@ -71,7 +71,7 @@ const Statistics = () => {
             </StatIconWrapper>
             <div>
               <h3>Genres</h3>
-              <p>{stats?.totalGenres}</p>
+              <p>{stats?.totalGenres ? stats?.totalGenres : "-"}</p>
             </div>
           </StatisticCard>
 
@@ -81,8 +81,8 @@ const Statistics = () => {
                 <IoPerson />
               </StatIconWrapper>
               <div>
-                <h3>{item?._id}</h3>
-                <p>{item?.count}</p>
+                <h3>{item?._id ? item?._id : "-"}</h3>
+                <p>{item?.count ? item?.count : "-"}</p>
               </div>
             </StatisticCard>
           ))}
